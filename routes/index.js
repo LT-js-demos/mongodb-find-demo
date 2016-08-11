@@ -20,8 +20,9 @@ exports.insert = function (request, response) {
 exports.find = function (request, response) {
     User.findOne({name:"Leonard"},function (error, docs) {
         if(error) response.send(error.message);
-        response.send("username:"+docs.name+",password:"+docs.password+`
-login success`);
+//         response.send("username:"+docs.name+",password:"+docs.password+`
+// login success`);
+        response.json({name:docs.name,password:docs.password});
     });
 
 };

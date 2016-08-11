@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/insert",routes.insert);
 app.get("/find",routes.find);
+app.post("/find",routes.find);
 // app.get('/find',routes.find);
 app.listen(3000);
 
