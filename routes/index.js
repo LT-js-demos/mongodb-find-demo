@@ -43,7 +43,10 @@ exports.login = function (request, response) {
         if (e) response.send(e.message);
 
         if (docs != null) {
-            response.send(docs+'<br><br>login success');
+            // response.location('https://www.baidu.com');
+            // response.redirect('./');
+            response.send('success');
+            // response.send(docs+'<br><br>login success');
         } else {
             response.redirect('./login');
             // var tpl = '<script>alert("YOU ARE A BAD BOY")</script>';

@@ -24,5 +24,8 @@ app.get("/login", function (req, res) {
 });
 app.post("/login", routes.login);
 
+app.get('/success', function (req, res) {
+    res.send('Welcome');
+});
 app.listen(3000);
 

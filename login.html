@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 <form action="http://localhost:3000/login" method="post">
@@ -10,5 +11,31 @@
     密码:<input type="password" name="password"/>
     <button type="submit">submit</button>
 </form>
+
+<button id="btn1">bt1</button>
+<div id="div1"></div>
+<script>
+    $(document).ready(function () {
+        $("#btn1").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:3000/login",
+                async: true,
+//                data: {"name=" + $('#name').val(),
+                data: {name :'Leonard',password:'admin'},
+                success: function (result) {
+//                    $("#div1").html(result);
+                    if(result==='success'){
+                        alert('success');
+                        location.href='./success'
+                    }
+                },
+                error: function (xhr) {
+                    alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                }
+            })
+        });
+    });
+</script>
 </body>
 </html>
