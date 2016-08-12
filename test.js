@@ -13,8 +13,15 @@ function translate(code) {
     };
     request(option, function (error, response, body) {
         // console.log(body);
+        if(error) console.log(error);
+        else
+        {
         console.log(typeof body);
-        console.log(body);
+        console.log(body.name);
+        console.log(response.body.name);
+
+        }
+
     });
 }
 translate(code);

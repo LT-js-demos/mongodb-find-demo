@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var session = require('express-session');
+
 
 var User = mongoose.model('User', {
     name: String,
@@ -8,21 +10,47 @@ var User = mongoose.model('User', {
 mongoose.connect("mongodb://localhost/mongodb-find-demo-db");
 
 exports.insert = function (request, response) {
-    var user = new User({
-        name: 'Leonard',
-        password: '123'
+    let name = request.body.name;
+    let password = request.body.password;
+    User.findOne({name:name},function (e, docs) {
+        if (e) response.send(e.message);
+
+        if(docs==null) {
+            console.log(name,password);
+            var user = new User({
+                name: name,
+                password: password
+            });
+            user.save(function (err) {
+                console.log('save status:', err ? 'failed' : 'success');
+            });
+        }
+        else{
+            // response.send('用户已存在');
+            var tpl = '<script>alert("用户已存在")</script>';
+            response.send(tpl); //你传回去的HTML码流将在客户的浏览器中执行
+            // response.redirect('./signin');
+        }
     });
-    user.save(function (err) {
-        console.log('save status:', err ? 'failed' : 'success');
-    });
+
 };
 
-exports.find = function (request, response) {
-    User.findOne({name:"Leonard"},function (error, docs) {
-        if(error) response.send(error.message);
-//         response.send("username:"+docs.name+",password:"+docs.password+`
-// login success`);
-        response.json({name:docs.name,password:docs.password});
+exports.login = function (request, response) {
+    let name = request.body.name;
+    let password = request.body.password;
+    console.log('---finding---');
+    User.findOne({name: name, password: password}, function (e, docs) {
+        if (e) response.send(e.message);
+
+        if (docs != null) {
+            response.send(docs+'<br><br>login success');
+        } else {
+            response.redirect('./login');
+            // var tpl = '<script>alert("YOU ARE A BAD BOY")</script>';
+            // response.send(tpl); //你传回去的HTML码流将在客户的浏览器中执行
+            //
+
+        }
     });
 
 };

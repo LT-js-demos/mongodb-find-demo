@@ -8,10 +8,12 @@ describe('test', () => {
             // body: {'code': code}
         };
         request(option, function (error, response, body) {
+            // console.log(body);
+            console.log(typeof body);
             console.log(body);
+            expect(body).toEqual('123');
         });
-        request(option);
-        console.log(123);
+        // expect(body).toEqual('123');
 
     });
 });
